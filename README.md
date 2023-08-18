@@ -1,4 +1,3 @@
 # JS-Project-001
 
-
-Normal Calculator
+random password generator
