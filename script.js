@@ -1,47 +1,58 @@
 
+const generateButton = document.getElementById("generate");
+const copyButton = document.getElementById("copy");
+const clearButton = document.getElementById("clear");
+const passwordField = document.getElementById("Display");
 
-function appendToDisplay(value) {
-    document.getElementById('Display').value += value;
+const charactors = "abcdefghjklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#$%^&*()_+~";
+
+passwordLength = 12;
+
+
+function generateRandomPassword(length)
+{
+  let password = "";
+  for (let i=0; i<length; i++)
+  {
+    const randomIndex = Math.floor(Math.random() * charactors.length);
+    password += charactors.charAt(randomIndex);
   }
+  return password;
+};
 
-  function calculate() {
-    try {
-      const result = eval(document.getElementById('Display').value);
-      document.getElementById('Display').value = result;
-    } catch (error) {
-      document.getElementById('Display').value = 'Error';
-    }
-  }
-
-  function clearDisplay() {
-    document.getElementById('Display').value = '';
-  }
-  
-
-// ... (existing code)
-
-function clearDisplay() {
-    document.getElementById('Display').value = '';
-  }
-  
-  // New function for the Clear button
-  function clearButton() {
-    clearDisplay();
-  }
-  
-
-
-
-
-
-const input = document.getElementById('Display');
-
-input.addEventListener('focus', () => {
-    input.placeholder = '';
+generateButton.addEventListener("click", function () {
+  const newPassword = generateRandomPassword(passwordLength);
+  passwordField.value = newPassword;
 });
 
-input.addEventListener('blur', () => {
-    if(input.value === ''){
-        input.placeholder = 'Enter the Value For Calculate'
-    }
-})
+
+copyButton.addEventListener("click", function () {
+  const textToCopy = passwordField.value;
+
+  navigator.clipboard.writeText(textToCopy)
+
+  .then(() => {
+    alert("password copy to clipboard !");
+  })
+  .catch((error) => {
+    console.error("copy failed", error);
+  });
+});
+
+
+
+clearButton.addEventListener("click", function()
+{
+  passwordField.value = "";
+});
+
+const initialPassword = generateRandomPassword(passwordLength);
+passwordField = initialPassword;
+
+
+
+
+
+
+
+
